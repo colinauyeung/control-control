@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Elments</title>
+  <title>Where Are We Going</title>
   <!-- Updated to Vega-Lite v6 compatible packages -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5.29.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.0.0"></script>
@@ -50,21 +50,17 @@
     }
 
     #chart {
-        display: flex;
-        justify-content: center; /* Centers horizontally */
+      display: flex;
+      justify-content: center; /* Centers horizontally */
     }
-
   </style>
 </head>
 <body>
-  <h1>Element Balancing</h1>
+  <h1>Where Are We Going Next</h1>
   <div id="chart"></div>
 
-  <!-- Scanline Effect Container -->
-
-
   <script>
-    const databaseURL = 'https://control-control-default-rtdb.firebaseio.com/elements.json';
+    const databaseURL = 'https://control-control-default-rtdb.firebaseio.com/where.json';
     async function pollFirebase() {
       try {
         const response = await fetch(databaseURL);
@@ -87,37 +83,28 @@
       const spec = {
         $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
         background: "black",
-        width: 200,
-        description: 'Smooth updating bar chart',
+        width: 300,
+        height: 300,
+        description: 'Smooth updating pie chart with legend',
         data: {
           values: data
         },
-        mark: "bar",
+        mark: "arc",  // Use 'arc' for pie chart
         encoding: {
-          x: {
-            field: 'category',
-            type: 'nominal',
-            axis: { 
-              title: 'Element', 
-              titleColor: 'white', 
-              labelColor: 'white'  // White axis labels
-            }
-          },
-          y: {
-            field: 'value',
+          theta: {
+            field: 'value', // Angular position of the arcs
             type: 'quantitative',
-            axis: { 
-              title: 'People', 
-              tickMinStep: 1,
-              titleColor: 'white',  // White axis title
-              labelColor: 'white'   // White y-axis labels
-            },
-            scale: { "domain": [0, 2] }
+            title: 'People'
+            // Removed the domain from scale, allowing Vega-Lite to handle it automatically
           },
           color: {
             field: 'category',
             type: 'nominal',
-            legend: null
+            legend: {
+              title: 'Element',
+              labelColor: 'white',  // Set legend label color to white
+              titleColor: 'white'   // Set legend title color to white
+            }
           }
         },
         config: {
@@ -132,7 +119,8 @@
             titleColor: 'white'   // White text for axis titles
           },
           mark: {
-            color: 'white'  // Default bar color, change if you need more variation
+            color: 'white',  // Default color for slices, change if needed
+            innerRadius: 100    // Removed donut effect, set inner radius to 0 for a full pie chart
           }
         }
       };

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Elments</title>
+  <title>Donations</title>
   <!-- Updated to Vega-Lite v6 compatible packages -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5.29.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.0.0"></script>
@@ -57,14 +57,14 @@
   </style>
 </head>
 <body>
-  <h1>Element Balancing</h1>
+  <h1>Are We Donating</h1>
   <div id="chart"></div>
 
   <!-- Scanline Effect Container -->
 
 
   <script>
-    const databaseURL = 'https://control-control-default-rtdb.firebaseio.com/elements.json';
+    const databaseURL = 'https://control-control-default-rtdb.firebaseio.com/donating.json';
     async function pollFirebase() {
       try {
         const response = await fetch(databaseURL);
@@ -98,7 +98,7 @@
             field: 'category',
             type: 'nominal',
             axis: { 
-              title: 'Element', 
+              title: '', 
               titleColor: 'white', 
               labelColor: 'white'  // White axis labels
             }
@@ -112,7 +112,7 @@
               titleColor: 'white',  // White axis title
               labelColor: 'white'   // White y-axis labels
             },
-            scale: { "domain": [0, 2] }
+            scale: { "domain": [0, 8] }
           },
           color: {
             field: 'category',

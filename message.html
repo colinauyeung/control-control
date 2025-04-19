@@ -1,7 +1,56 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Firebase REST Polling Example</title>
+  <title>Navi</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    /* General body styles */
+    body {
+      background-color: black;
+      color: white;
+      font-family: 'Roboto Mono', monospace;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    /* Flicker effect via animation */
+    @keyframes flicker {
+      0% { opacity: 1; }
+      5% { opacity: 0.8; }
+      10% { opacity: 1; }
+      15% { opacity: 0.7; }
+      20% { opacity: 1; }
+      25% { opacity: 0.8; }
+      30% { opacity: 1; }
+      40% { opacity: 0.9; }
+      50% { opacity: 1; }
+      60% { opacity: 0.8; }
+      70% { opacity: 1; }
+      80% { opacity: 0.7; }
+      90% { opacity: 1; }
+      100% { opacity: 0.8; }
+    }
+
+    /* Apply the flicker effect to the body */
+    body {
+      animation: flicker 4s infinite; /* Slower flicker (4s cycle) */
+    }
+
+    /* Apply some slight curvature to the text to make it feel more CRT */
+    h1, h2 {
+      text-shadow: 0px 0px 5px rgba(255, 255, 255, 0.5);
+      filter: blur(0.5px);
+      display: flex;
+      justify-content: center; /* Centers horizontally */
+    }
+
+    #chart {
+        display: flex;
+        justify-content: center; /* Centers horizontally */
+    }
+
+  </style>
   <script>
     // Your Firebase project URL — make sure to replace with your own
     const databaseURL = 'https://control-control-default-rtdb.firebaseio.com/message.json';
@@ -24,7 +73,7 @@
   </script>
 </head>
 <body>
-  <h1>Firebase REST Polling</h1>
-  <pre id="output">Waiting for data...</pre>
+  <h1>Navi: Your Personal Ship Assisant</h1>
+  <h2 id="output">Waiting for data...</h2>
 </body>
 </html>
