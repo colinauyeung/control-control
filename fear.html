@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Elements</title>
+  <title>Fear</title>
   <!-- Updated to Vega-Lite v6 compatible packages -->
   <script src="https://cdn.jsdelivr.net/npm/vega@5.29.0"></script>
   <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.0.0"></script>
@@ -57,14 +57,14 @@
   </style>
 </head>
 <body>
-  <h1>Element Balancing</h1>
+  <h1>Fear Levels</h1>
   <div id="chart"></div>
 
   <!-- Scanline Effect Container -->
 
 
   <script>
-    const databaseURL = 'https://control-control-default-rtdb.firebaseio.com/elements.json';
+    const databaseURL = 'https://control-control-default-rtdb.firebaseio.com/fear.json';
     async function pollFirebase() {
       try {
         const response = await fetch(databaseURL);
@@ -98,21 +98,21 @@
             field: 'category',
             type: 'nominal',
             axis: { 
-              title: 'Element', 
+              title: 'Fear', 
               titleColor: 'white', 
-              labelColor: 'white'  // White axis labels
+              labelColor: 'black'  // White axis labels
             }
           },
           y: {
             field: 'value',
             type: 'quantitative',
             axis: { 
-              title: 'People', 
+              title: 'Percentage', 
               tickMinStep: 1,
               titleColor: 'white',  // White axis title
               labelColor: 'white'   // White y-axis labels
             },
-            scale: { "domain": [0, 2] }
+            scale: { "domain": [0, 100] }
           },
           color: {
             field: 'category',
