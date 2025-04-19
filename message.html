@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Firebase REST Polling Example</title>
+  <script>
+    // Your Firebase project URL — make sure to replace with your own
+    const databaseURL = 'https://control-control-default-rtdb.firebaseio.com/message.json';
+
+    async function pollFirebase() {
+      try {
+        const response = await fetch(databaseURL);
+        if (!response.ok) throw new Error("Network response was not ok");
+
+        const data = await response.json();
+        console.log("Polled data:", data);
+        document.getElementById("output").textContent = JSON.stringify(data, null, 2);
+      } catch (error) {
+        console.error("Error polling Firebase:", error);
+      }
+    }
+
+    // Start polling every 0.5 seconds
+    setInterval(pollFirebase, 500);
+  </script>
+</head>
+<body>
+  <h1>Firebase REST Polling</h1>
+  <pre id="output">Waiting for data...</pre>
+</body>
+</html>

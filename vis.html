@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Firebase + Vega-Lite v6 Chart</title>
+  <!-- Updated to Vega-Lite v6 compatible packages -->
+  <script src="https://cdn.jsdelivr.net/npm/vega@5.29.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.0.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@6.22.2"></script>
+</head>
+<body style="background-color: black; color: white;">
+  <h1>Element Balancing</h1>
+  <div id="chart"></div>
+
+  <script>
+    const databaseURL = 'https://control-control-default-rtdb.firebaseio.com/elements.json';
+    async function pollFirebase() {
+      try {
+        const response = await fetch(databaseURL);
+        const data = await response.json();
+
+        if (!data) return;
+
+        const formattedData = Object.entries(data).map(([category, value]) => ({
+          category,
+          value
+        }));
+
+        renderChart(formattedData);
+      } catch (err) {
+        console.error('Polling error:', err);
+      }
+    }
+
+    function renderChart(data) {
+      const spec = {
+        $schema: 'https://vega.github.io/schema/vega-lite/v6.json',
+        background: 'black',  // Black background for the chart
+        width: 200,
+        description: 'Smooth updating bar chart',
+        data: {
+          values: data
+        },
+        mark: "bar",
+        encoding: {
+          x: {
+            field: 'category',
+            type: 'nominal',
+            axis: { 
+              title: 'Element', 
+              titleColor: 'white', 
+              labelColor: 'white'  // White axis labels
+            }
+          },
+          y: {
+            field: 'value',
+            type: 'quantitative',
+            axis: { 
+              title: 'People', 
+              tickMinStep: 1,
+              titleColor: 'white',  // White axis title
+              labelColor: 'white'   // White y-axis labels
+            },
+            scale: { "domain": [0, 2] }
+          },
+          color: {
+            field: 'category',
+            type: 'nominal',
+            legend: null
+          }
+        },
+        config: {
+          view: { 
+            stroke: 'transparent',
+            
+          },
+          axis: { 
+            labelFontSize: 12, 
+            titleFontSize: 14,
+            labelColor: 'white',  // White text for axis labels
+            titleColor: 'white'   // White text for axis titles
+          },
+          mark: {
+            color: 'white'  // Default bar color, change if you need more variation
+          }
+        }
+      };
+
+      // Re-render chart with vegaEmbed
+      vegaEmbed('#chart', spec, { actions: false, renderer: 'canvas' });
+    }
+
+    // Poll and re-render every 500ms
+    setInterval(pollFirebase, 500);
+  </script>
+</body>
+</html>
